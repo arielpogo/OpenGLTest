@@ -19,7 +19,7 @@
 
 #include "Camera.h"
 
-Scenes::Scene* scene = new Scenes::Test_3D();
+Scenes::Scene* scene;
 
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height); //whenever the window is resized, resize the viewport
@@ -189,11 +189,10 @@ int main(void) {
     {
        int selection = 0;
        const char* tests[] = { "Default", "Background Picker", "3D Test" };
-       
+       scene = new Scenes::Test_3D();
         // Loop until the user closes the window 
         while (!glfwWindowShouldClose(window)) {
             processInput(window);
-
 
             scene->OnUpdate(0.0f);
             scene->OnRender();
