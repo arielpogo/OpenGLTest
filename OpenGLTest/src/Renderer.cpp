@@ -10,7 +10,8 @@ void Renderer::Draw(const IndexBuffer& ib, const unsigned int vao, const Shader&
 
     // Render here
     glClear(GL_COLOR_BUFFER_BIT);
-    glDrawElements(GL_TRIANGLES, ib.GetCount() , GL_UNSIGNED_INT, nullptr);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 
     glBindVertexArray(0);
     ib.Unbind();

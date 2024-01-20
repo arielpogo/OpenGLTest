@@ -481,8 +481,6 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\vertexshader.shader" />
-    <None Include="res\shaders\fragmentshader.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\structures\Shader.h">

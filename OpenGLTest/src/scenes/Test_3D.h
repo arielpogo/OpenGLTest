@@ -13,17 +13,57 @@ namespace Scenes {
         IndexBuffer* indexBuffer;
         unsigned int vertexArray;
 
-        const float vertexes[16] = { //pos, texture coordinate
-            -0.50f, -0.50f, 0.0f, 0.0f,
-             0.50f, -0.50f, 1.0f, 0.0f,
-             0.50f,  0.50f, 1.0f, 1.0f,
-            -0.50f,  0.50f, 0.0f, 1.0f,
+        float vertices[180] = {
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+
+        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
         };
 
-        const unsigned int indices[6] = { //the indexes of the vertices to draw the triangles
-            0, 1, 2,
-            2, 3, 0
-        };
+        //const unsigned int indices[6*2] = { //the indexes of the vertices to draw the triangles
+        //    0, 1, 2,
+        //    2, 3, 0,
+
+        //    1, 5, 4,
+        //    4, 2, 1
+        //};
 
         Renderer renderer;
         
@@ -36,11 +76,11 @@ namespace Scenes {
             glGenVertexArrays(1, &vertexArray); //create 1 VAO
             glBindVertexArray(vertexArray);
 
-            vertexBuffer = new VertexBuffer(vertexes, 4 * 4 * sizeof(float));
-            indexBuffer = new IndexBuffer(indices, 6);
+            vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
+            //indexBuffer = new IndexBuffer(indices, 6*2);
 
             vertexBuffer->Bind();
-            indexBuffer->Bind();
+            //indexBuffer->Bind();
 
             //glEnableVertexAttribArray(0); //default VAO on compat profile. Core requires specifically creating it
 
@@ -53,8 +93,8 @@ namespace Scenes {
             //normalized: self-explanitory
             //stride: bytes between each index
             //pointer: offset of the first instance of this attribute
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)0);
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(2 * sizeof(float)));
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
             glBindVertexArray(0);
