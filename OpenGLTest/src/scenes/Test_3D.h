@@ -26,20 +26,14 @@ namespace Scenes {
         };
 
         Renderer renderer;
-
-        glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (float) globalWidth / (float) globalHeight, 0.1f, 100.0f);
-        glm::mat4 viewMatrix = glm::mat4(1.0f);
-        glm::mat4 modelMatrix = glm::mat4(1.0f);
-        glm::mat4 MVP;
-
         
         Texture texture = Texture("res/textures/mason.png");
         Shader shader = Shader("res/shaders/basicvertex.shader", "res/shaders/basicfragment.shader");
 
     public:
 	    Test_3D() {
-            modelMatrix = glm::rotate(modelMatrix, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            MVP = projectionMatrix * viewMatrix * modelMatrix;
+            
+            
 
             glGenVertexArrays(1, &vertexArray); //create 1 VAO
             glBindVertexArray(vertexArray);
@@ -83,15 +77,15 @@ namespace Scenes {
 
 	    void OnUpdate(float deltaTime) override {};
 
-	    void OnRender(glm::mat4 IGNORE) override {
+	    void OnRender(glm::mat4 MVP) override {
             glClearColor(0.86f, 1.0f, 1.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             texture.Bind();
 
-            viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+            
 
             shader.Bind();
-            MVP = projectionMatrix * viewMatrix * modelMatrix;
+            
             shader.SetUniformMatrix4f("u_MVP", MVP);
 
             renderer.Draw(*indexBuffer, vertexArray, shader);

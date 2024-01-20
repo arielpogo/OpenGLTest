@@ -191,12 +191,20 @@ int main(void) {
        int selection = 0;
        const char* tests[] = { "Default", "Background Picker", "3D Test" };
 
+       glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (float)globalWidth / (float)globalHeight, 0.1f, 100.0f);
+       glm::mat4 viewMatrix = glm::mat4(1.0f);
+       glm::mat4 modelMatrix = modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+       glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
+       
+
         // Loop until the user closes the window 
         while (!glfwWindowShouldClose(window)) {
             processInput(window);
 
+            viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+            MVP = projectionMatrix * viewMatrix * modelMatrix;
             scene->OnUpdate(0.0f);
-            scene->OnRender(glm::mat4(0.0f));
+            scene->OnRender(MVP);
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
