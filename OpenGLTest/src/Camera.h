@@ -12,11 +12,6 @@ public:
 		this->MVP = projectionMatrix * viewMatrix * modelMatrix;
 	}
 
-	Camera() {
-		projectionMatrix = glm::perspective(glm::radians(45.0f), (float)globalWidth / (float)globalHeight, 0.01f, 100.0f);
-		viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
-	}
-
 	glm::vec3 cameraDirection;
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -24,7 +19,7 @@ public:
 	float yaw = -90.0f;
 	float pitch = 0.0f;
 
-	glm::mat4 projectionMatrix = glm::mat4(1.0f);
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (float)globalWidth / (float)globalHeight, 0.01f, 100.0f);
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
 	glm::mat4 modelMatrix = glm::mat4(1.0f);//glm::rotate(glm::mat4(1.0f), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;

@@ -71,8 +71,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\basicvertex.shader" />
-    <None Include="res\shaders\basicfragment.shader" />
+    <None Include="res\shaders\textured_vertex.shader" />
+    <None Include="res\shaders\textured_fragment.shader" />
     <None Include="src\vendor\glm\gtc\bitfield.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -481,6 +481,10 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="res\shaders\lit_vertex.shader" />
+    <None Include="res\shaders\lit_fragment.shader" />
+    <None Include="res\shaders\emissive_surface_fragment.shader" />
+    <None Include="res\shaders\emissive_surface_vertex.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\structures\Shader.h">

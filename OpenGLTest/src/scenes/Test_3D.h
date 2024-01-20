@@ -10,51 +10,66 @@ namespace Scenes {
 	class Test_3D : public Scene {
     private:
         VertexBuffer* vertexBuffer; //automatically binds
-        IndexBuffer* indexBuffer;
-        unsigned int vertexArray;
+        //IndexBuffer* indexBuffer;
+        unsigned int cubeVertexArray; //regular cubes
+
+        unsigned int lightVertexArray;
 
         float vertices[180] = {
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
 
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
 
-        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
 
-        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
 
-        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+        };
+
+        std::vector<glm::vec3> cubePositions{
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 5.0f, -15.0f),
+            glm::vec3(-1.5f, -2.2f, -2.5f),
+            glm::vec3(-3.8f, -2.0f, -12.3f),
+            glm::vec3(2.4f, -0.4f, -3.5f),
+            glm::vec3(-1.7f, 3.0f, -7.5f),
+            glm::vec3(1.3f, -2.0f, -2.5f),
+            glm::vec3(1.5f, 2.0f, -2.5f),
+            glm::vec3(1.5f, 0.2f, -1.5f),
+            glm::vec3(-1.3f, 1.0f, -1.5f)
         };
 
         //const unsigned int indices[6*2] = { //the indexes of the vertices to draw the triangles
@@ -64,17 +79,18 @@ namespace Scenes {
         //    1, 5, 4,
         //    4, 2, 1
         //};
+   
+        Texture texture = Texture("res/textures/texture.png");
+        Shader texturedShader = Shader("res/shaders/textured_vertex.shader", "res/shaders/textured_fragment.shader");
+        Shader litShader = Shader("res/shaders/lit_vertex.shader", "res/shaders/lit_fragment.shader");
+        Shader emissiveSurfaceShader = Shader("res/shaders/emissive_surface_vertex.shader", "res/shaders/emissive_surface_fragment.shader");
 
-        Renderer renderer;
-        
-        Texture texture = Texture("res/textures/mason.png");
-        Shader shader = Shader("res/shaders/basicvertex.shader", "res/shaders/basicfragment.shader");
+        glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 
     public:
 	    Test_3D() {
-            
-            glGenVertexArrays(1, &vertexArray); //create 1 VAO
-            glBindVertexArray(vertexArray);
+            glGenVertexArrays(1, &cubeVertexArray); //create 1 VAO
+            glBindVertexArray(cubeVertexArray);
 
             vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
             //indexBuffer = new IndexBuffer(indices, 6*2);
@@ -101,8 +117,21 @@ namespace Scenes {
 
             texture.Bind();
             vertexBuffer->Unbind();
-            indexBuffer->Unbind();
-            shader.Unbind();
+            //indexBuffer->Unbind();
+            texturedShader.Unbind();
+
+            //LIGHT CUBES
+            glGenVertexArrays(1, &lightVertexArray);
+            glBindVertexArray(lightVertexArray);
+            vertexBuffer->Bind();
+
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
+            glEnableVertexAttribArray(0);
+            glBindVertexArray(0);
+
+            litShader.Bind();
+            litShader.SetUniformVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+            litShader.SetUniformVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT);
@@ -110,21 +139,45 @@ namespace Scenes {
 
 	    ~Test_3D() {
             delete vertexBuffer;
-            delete indexBuffer;
+            //delete indexBuffer;
         }
 
 	    void OnUpdate(float deltaTime) override {};
 
 	    void OnRender() override {
-            glClearColor(0.86f, 1.0f, 1.0f, 0.0f);
+            glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             texture.Bind();
+            //camera.Update();
+            litShader.Bind();
+
+            //draw the various cubes
+            for (int i = 0; i < cubePositions.size(); i++) {
+                camera.modelMatrix = glm::mat4(1.0f);
+                camera.modelMatrix = glm::translate(camera.modelMatrix, cubePositions[i]);
+                camera.Update();
+                litShader.SetUniformMatrix4f("u_MVP", camera.MVP);
+
+                glBindVertexArray(cubeVertexArray);
+                glDrawArrays(GL_TRIANGLES, 0, 36);
+                glBindVertexArray(0);
+            }
+            texture.Unbind(); //not strictly necesarry, but why not
+
+            //draw the light source
+            emissiveSurfaceShader.Bind();
+            camera.modelMatrix = glm::mat4(1.0f);
+            camera.modelMatrix = glm::translate(camera.modelMatrix, lightPos);
+            camera.modelMatrix = glm::scale(camera.modelMatrix, glm::vec3(0.2f));
             camera.Update();
-            shader.Bind();
-            shader.SetUniformMatrix4f("u_MVP", camera.MVP);
-            renderer.Draw(*indexBuffer, vertexArray, shader);
-	    }
+            emissiveSurfaceShader.SetUniformMatrix4f("u_MVP", camera.MVP);
+
+            glBindVertexArray(lightVertexArray);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+
+            glBindVertexArray(0);
+        }
 
 	    void OnImGuiRender()  override {}
 	};

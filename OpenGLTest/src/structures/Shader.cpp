@@ -237,6 +237,10 @@ void Shader::SetUniformMatrix4f(const std::string& name, const glm::mat4& matrix
     glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]); //no need to transpose, glm does column major
 }
 
+void Shader::SetUniformVec3(const std::string& name, const glm::vec3& v){
+    glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
+}
+
 int Shader::GetUniformLocation(const std::string& name)
 {
     int location = glGetUniformLocation(m_RendererID, name.c_str());

@@ -155,8 +155,12 @@
     <ClCompile Include="src\structures\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\basicvertex.shader" />
-    <None Include="res\shaders\basicfragment.shader" />
+    <None Include="res\shaders\lit_fragment.shader" />
+    <None Include="res\shaders\emissive_surface_fragment.shader" />
+    <None Include="res\shaders\emissive_surface_vertex.shader" />
+    <None Include="res\shaders\lit_vertex.shader" />
+    <None Include="res\shaders\textured_vertex.shader" />
+    <None Include="res\shaders\textured_fragment.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
