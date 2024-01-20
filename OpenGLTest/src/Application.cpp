@@ -19,6 +19,8 @@
 
 #include "Camera.h"
 
+Scenes::Scene* scene = new Scenes::Test_3D();
+
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height); //whenever the window is resized, resize the viewport
     globalWidth = width;
@@ -59,15 +61,13 @@ void processInput(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) cameraSpeed /= 10.0f;
     
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
+        scene->camera.cameraPos += cameraSpeed * scene->camera.cameraFront;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
+        scene->camera.cameraPos -= cameraSpeed * scene->camera.cameraFront;
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
-        cameraSpeed;
+        scene->camera.cameraPos -= glm::normalize(glm::cross(scene->camera.cameraFront, scene->camera.cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
-        cameraSpeed;
+        scene->camera.cameraPos += glm::normalize(glm::cross(scene->camera.cameraFront, scene->camera.cameraUp)) * cameraSpeed;
 }
 
 const float sensitivity = 0.05f;
@@ -87,16 +87,16 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 
-    yaw += xoffset;
-    pitch += yoffset;
+    scene->camera.yaw += xoffset;
+    scene->camera.pitch += yoffset;
 
-    if (pitch > 89.0f) pitch = 89.0f;
-    else if (pitch < -89.0f) pitch = -89.0f;
+    if (scene->camera.pitch > 89.0f) scene->camera.pitch = 89.0f;
+    else if (scene->camera.pitch < -89.0f) scene->camera.pitch = -89.0f;
 
-    cameraDirection.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraDirection.y = sin(glm::radians(pitch));
-    cameraDirection.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(cameraDirection);
+    scene->camera.cameraDirection.x = cos(glm::radians(scene->camera.yaw)) * cos(glm::radians(scene->camera.pitch));
+    scene->camera.cameraDirection.y = sin(glm::radians(scene->camera.pitch));
+    scene->camera.cameraDirection.z = sin(glm::radians(scene->camera.yaw)) * cos(glm::radians(scene->camera.pitch));
+    scene->camera.cameraFront = glm::normalize(scene->camera.cameraDirection);
 }
 
 int main(void) {
@@ -186,25 +186,17 @@ int main(void) {
     //                            //
     //****************************//
 
-    {        
-       Scenes::Scene* scene = new Scenes::Test_3D();
+    {
        int selection = 0;
        const char* tests[] = { "Default", "Background Picker", "3D Test" };
-
-       glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (float)globalWidth / (float)globalHeight, 0.1f, 100.0f);
-       glm::mat4 viewMatrix = glm::mat4(1.0f);
-       glm::mat4 modelMatrix = modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-       glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
        
-
         // Loop until the user closes the window 
         while (!glfwWindowShouldClose(window)) {
             processInput(window);
 
-            viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-            MVP = projectionMatrix * viewMatrix * modelMatrix;
+
             scene->OnUpdate(0.0f);
-            scene->OnRender(MVP);
+            scene->OnRender();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();

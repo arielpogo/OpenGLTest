@@ -11,7 +11,7 @@ namespace Scenes {
 		~Test_Default() {}
 
 		void OnUpdate(float deltaTime) override {};
-		void OnRender(glm::mat4 MVP) override {
+		void OnRender() override {
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 		}

@@ -33,8 +33,6 @@ namespace Scenes {
     public:
 	    Test_3D() {
             
-            
-
             glGenVertexArrays(1, &vertexArray); //create 1 VAO
             glBindVertexArray(vertexArray);
 
@@ -77,17 +75,14 @@ namespace Scenes {
 
 	    void OnUpdate(float deltaTime) override {};
 
-	    void OnRender(glm::mat4 MVP) override {
+	    void OnRender() override {
             glClearColor(0.86f, 1.0f, 1.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
             texture.Bind();
-
-            
-
+            camera.Update();
             shader.Bind();
-            
-            shader.SetUniformMatrix4f("u_MVP", MVP);
-
+            shader.SetUniformMatrix4f("u_MVP", camera.MVP);
             renderer.Draw(*indexBuffer, vertexArray, shader);
 	    }
 
