@@ -157,6 +157,9 @@ namespace Scenes {
                 camera.modelMatrix = glm::translate(camera.modelMatrix, cubePositions[i]);
                 camera.Update();
                 litShader.SetUniformMatrix4f("u_MVP", camera.MVP);
+                glm::mat3 normalMatrix = glm::mat3(camera.modelMatrix);
+                normalMatrix = glm::transpose(glm::inverse(normalMatrix));
+                litShader.SetUniformMatrix3f("normalMatrix", normalMatrix);
                 litShader.SetUniformMatrix4f("modelMatrix", camera.modelMatrix);
                 litShader.SetUniformVec3("viewPos", camera.cameraPos);
 

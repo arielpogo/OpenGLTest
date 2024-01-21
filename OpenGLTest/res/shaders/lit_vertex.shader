@@ -10,10 +10,11 @@ out vec2 v_TexCoord;
 
 uniform mat4 u_MVP;
 uniform mat4 modelMatrix;
+uniform mat3 normalMatrix;
 
 void main() {
 	gl_Position = u_MVP * vec4(pos, 1.0f);
-	v_FragmentPosition = vec3(modelMatrix * vec4(pos, 1.0f)); //transform the vertex position into world coordinates for the fragment shader
-	v_Normal = mat3(transpose(inverse(modelMatrix))) * normal; //HEY!!! This is EXPENSIVE!!! Fix this in the future! Do this on the CPU!!
+	v_FragmentPosition = vec3(modelMatrix * vec4(pos, 1.0f)); //transform the vertex position into view coordinates for the fragment shader
+	v_Normal = normalMatrix * normal;
 	v_TexCoord = texCoord;
 };
