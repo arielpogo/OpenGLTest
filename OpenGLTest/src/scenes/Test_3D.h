@@ -128,9 +128,13 @@ namespace Scenes {
             glBindVertexArray(0);
 
             litShader.Bind();
-            litShader.SetUniformVec3("u_ObjectColor", glm::vec3(1.0f, 0.5f, 0.5f));
             litShader.SetUniformVec3("u_LightColor", glm::vec3(1.0f, 1.0f, 1.0f));
             litShader.SetUniformVec3("lightPos", lightPos);
+
+            litShader.SetUniformVec3("u_Material.ambientColor", glm::vec3(1.0f, 0.5f, 0.31f));
+            litShader.SetUniformVec3("u_Material.diffuseColor", glm::vec3(1.0f, 0.5f, 0.31f));
+            litShader.SetUniformVec3("u_Material.specularColor",glm::vec3(0.5f, 0.5f, 0.50f));
+            litShader.SetUniform1f("u_Material.shininess", 32.0f);
 
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT);
