@@ -9,6 +9,7 @@ out vec4 FragColor;
 uniform vec3 objectColor;
 uniform vec3 lightColor;
 uniform vec3 lightPos;
+uniform vec3 viewPos; //Most people calculate this stuff in view space (where the camera is always 0,0,0), TODO: Move everything to the view space instead of model space
 
 uniform sampler2D u_Texture;
 
@@ -27,6 +28,15 @@ void main() {
 	float diffusionFactor = max(dot(normalized_normal, lightDirection), 0.0f);
 	vec3 diffuseColor = diffusionFactor * lightColor;
 
-	vec3 result = (ambientColor + diffuseColor) * objectColor;
+	//specular lighting
+	float specularStrength = 0.5f;
+	vec3 viewDirection = normalize(viewPos - v_FragmentPosition);
+	vec3 reflectionDirection = reflect(-lightDirection, normalized_normal); //reflect the light off the normal
+
+	//Last integer is the shininess value, the power it's raised to
+	float specularComponent = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 256); //dot product -> ensure not negative -> raise to shininess power
+	vec3 specularColor = specularStrength * specularComponent * lightColor;
+
+	vec3 result = (ambientColor + diffuseColor + specularColor) * objectColor;
 	FragColor = vec4(result, 1.0)* texColor;
 };

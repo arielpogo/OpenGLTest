@@ -158,6 +158,7 @@ namespace Scenes {
                 camera.Update();
                 litShader.SetUniformMatrix4f("u_MVP", camera.MVP);
                 litShader.SetUniformMatrix4f("modelMatrix", camera.modelMatrix);
+                litShader.SetUniformVec3("viewPos", camera.cameraPos);
 
                 glBindVertexArray(cubeVertexArray);
                 glDrawArrays(GL_TRIANGLES, 0, 36);
