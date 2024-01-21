@@ -128,8 +128,9 @@ namespace Scenes {
             glBindVertexArray(0);
 
             litShader.Bind();
-            litShader.SetUniformVec3("u_LightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-            litShader.SetUniformVec3("lightPos", lightPos);
+            litShader.SetUniformVec3("u_Light.ambientColor", glm::vec3(0.2f, 0.2f, 0.2f)); //color not too dominant
+            litShader.SetUniformVec3("u_Light.diffuseColor", glm::vec3(0.5f, 0.5f, 0.5f)); //basically the color of the light
+            litShader.SetUniformVec3("u_Light.specularColor", glm::vec3(1.0f, 1.0f, 1.0f));//we want full shininess
 
             litShader.SetUniformVec3("u_Material.ambientColor", glm::vec3(1.0f, 0.5f, 0.31f));
             litShader.SetUniformVec3("u_Material.diffuseColor", glm::vec3(1.0f, 0.5f, 0.31f));
@@ -164,15 +165,14 @@ namespace Scenes {
                 glm::mat4 MV = glm::mat4(camera.viewMatrix * camera.modelMatrix);
                 litShader.SetUniformMatrix4f("u_MV", MV);
 
+                litShader.SetUniformVec3("u_Light.position", glm::vec3(camera.viewMatrix * glm::vec4(lightPos, 1.0f))); //or just the view matrix
+
                 glm::mat3 normalMatrix = glm::mat3(MV);
                 normalMatrix = glm::transpose(glm::inverse(normalMatrix));
                 litShader.SetUniformMatrix3f("u_NormalMatrix", normalMatrix);
 
                 litShader.SetUniformMatrix4f("u_MVP", camera.MVP);
-                litShader.SetUniformMatrix4f("u_ViewMatrix", camera.viewMatrix);
-
-
-                //litShader.SetUniformVec3("u_ViewPos", camera.cameraPos);
+                //litShader.SetUniformMatrix4f("u_ViewMatrix", camera.viewMatrix);
 
                 glBindVertexArray(cubeVertexArray);
                 glDrawArrays(GL_TRIANGLES, 0, 36);
