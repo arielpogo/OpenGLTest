@@ -128,8 +128,8 @@ namespace Scenes {
             glBindVertexArray(0);
 
             litShader.Bind();
-            litShader.SetUniformVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.5f));
-            litShader.SetUniformVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+            litShader.SetUniformVec3("u_ObjectColor", glm::vec3(1.0f, 0.5f, 0.5f));
+            litShader.SetUniformVec3("u_LightColor", glm::vec3(1.0f, 1.0f, 1.0f));
             litShader.SetUniformVec3("lightPos", lightPos);
 
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -156,12 +156,19 @@ namespace Scenes {
                 camera.modelMatrix = glm::mat4(1.0f);
                 camera.modelMatrix = glm::translate(camera.modelMatrix, cubePositions[i]);
                 camera.Update();
-                litShader.SetUniformMatrix4f("u_MVP", camera.MVP);
-                glm::mat3 normalMatrix = glm::mat3(camera.modelMatrix);
+
+                glm::mat4 MV = glm::mat4(camera.viewMatrix * camera.modelMatrix);
+                litShader.SetUniformMatrix4f("u_MV", MV);
+
+                glm::mat3 normalMatrix = glm::mat3(MV);
                 normalMatrix = glm::transpose(glm::inverse(normalMatrix));
-                litShader.SetUniformMatrix3f("normalMatrix", normalMatrix);
-                litShader.SetUniformMatrix4f("modelMatrix", camera.modelMatrix);
-                litShader.SetUniformVec3("viewPos", camera.cameraPos);
+                litShader.SetUniformMatrix3f("u_NormalMatrix", normalMatrix);
+
+                litShader.SetUniformMatrix4f("u_MVP", camera.MVP);
+                litShader.SetUniformMatrix4f("u_ViewMatrix", camera.viewMatrix);
+
+
+                //litShader.SetUniformVec3("u_ViewPos", camera.cameraPos);
 
                 glBindVertexArray(cubeVertexArray);
                 glDrawArrays(GL_TRIANGLES, 0, 36);
