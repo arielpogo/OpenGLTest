@@ -76,7 +76,7 @@ namespace Scenes {
         //    4, 2, 1
         //};
    
-        Texture texture = Texture("res/textures/texture.png");
+        Texture texture = Texture("res/textures/texture3.jpg");
         Shader texturedShader = Shader("res/shaders/textured_vertex.shader", "res/shaders/textured_fragment.shader");
         Shader litShader = Shader("res/shaders/lit_vertex.shader", "res/shaders/lit_fragment.shader");
         Shader emissiveSurfaceShader = Shader("res/shaders/emissive_surface_vertex.shader", "res/shaders/emissive_surface_fragment.shader");
@@ -128,13 +128,13 @@ namespace Scenes {
             glBindVertexArray(0);
 
             litShader.Bind();
-            litShader.SetUniformVec3("u_Light.ambientColor", glm::vec3(0.2f, 0.2f, 0.2f)); //color not too dominant
-            litShader.SetUniformVec3("u_Light.diffuseColor", glm::vec3(0.5f, 0.5f, 0.5f)); //basically the color of the light
+            litShader.SetUniformVec3("u_Light.ambientColor", glm::vec3(1.0f, 1.0f, 1.0f)); //color not too dominant
+            litShader.SetUniformVec3("u_Light.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f)); //basically the color of the light
             litShader.SetUniformVec3("u_Light.specularColor", glm::vec3(1.0f, 1.0f, 1.0f));//we want full shininess
 
-            litShader.SetUniformVec3("u_Material.ambientColor", glm::vec3(1.0f, 0.5f, 0.31f));
-            litShader.SetUniformVec3("u_Material.diffuseColor", glm::vec3(1.0f, 0.5f, 0.31f));
-            litShader.SetUniformVec3("u_Material.specularColor",glm::vec3(0.5f, 0.5f, 0.50f));
+            litShader.SetUniformVec3("u_Material.ambientColor", glm::vec3(1.0f, 1.0f, 1.0f));
+            litShader.SetUniformVec3("u_Material.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
+            litShader.SetUniformVec3("u_Material.specularColor",glm::vec3(1.0f, 1.0f, 1.0f));
             litShader.SetUniform1f("u_Material.shininess", 32.0f);
 
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

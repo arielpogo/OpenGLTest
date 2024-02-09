@@ -54,7 +54,7 @@ void GLAPIENTRY DebugMessageCallback(GLenum source, GLenum type, GLuint id, GLen
 }
 
 void processInput(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+    //if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 
     float cameraSpeed = 0.20f;
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) cameraSpeed += 0.30f;
@@ -155,7 +155,7 @@ int main(void) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //source factor is what we do with the source (new data from fragment shader) and the destination (existing data)
 
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //FPS camera input
+   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //FPS camera input
     glfwSetCursorPosCallback(window, mouse_callback);
 
     std::cout << "OpenGL Version " << glGetString(GL_VERSION) << std::endl;
@@ -201,7 +201,7 @@ int main(void) {
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            ImGui::Begin("Scene Selection");
+            /*ImGui::Begin("Scene Selection");
             ImGui::ListBox("Scene", &selection, tests, IM_ARRAYSIZE(tests), 10);
 
             if (ImGui::Button("Load")) {
@@ -222,7 +222,7 @@ int main(void) {
                 }
             }
 
-            ImGui::End();
+            ImGui::End();*/
 
             scene->OnImGuiRender();
 
